@@ -274,6 +274,11 @@ p { margin: 0; }
 /* ---------- Dialogs: product + cart ---------- */
 dialog { border: none; padding: 0; color: var(--text); background: var(--surface); }
 html:has(dialog[open]) { overflow: hidden; }
+dialog, dialog * { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+/* Safari ignores scrollbar-color */
+dialog ::-webkit-scrollbar, dialog::-webkit-scrollbar { width: 8px; height: 8px; }
+dialog ::-webkit-scrollbar-thumb, dialog::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+dialog ::-webkit-scrollbar-track, dialog::-webkit-scrollbar-track { background: transparent; }
 dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
 .product-dialog { width: min(100% - 2rem, 760px); max-height: min(90vh, 900px); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
 .product-dialog .media { aspect-ratio: 16 / 9; background: var(--surface-2); }
