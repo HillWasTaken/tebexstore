@@ -273,6 +273,7 @@ p { margin: 0; }
 
 /* ---------- Dialogs: product + cart ---------- */
 dialog { border: none; padding: 0; color: var(--text); background: var(--surface); }
+html:has(dialog[open]) { overflow: hidden; }
 dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
 .product-dialog { width: min(100% - 2rem, 760px); max-height: min(90vh, 900px); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
 .product-dialog .media { aspect-ratio: 16 / 9; background: var(--surface-2); }
