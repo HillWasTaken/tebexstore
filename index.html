@@ -277,6 +277,11 @@ dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
 .product-dialog { width: min(100% - 2rem, 760px); max-height: min(90vh, 900px); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
 .product-dialog .media { aspect-ratio: 16 / 9; background: var(--surface-2); }
 .product-dialog .media img { width: 100%; height: 100%; object-fit: cover; }
+.thumbs { display: flex; gap: .5rem; padding: .75rem 1.6rem 0; overflow-x: auto; }
+.thumbs:empty { display: none; }
+.thumbs button { flex: none; width: 96px; aspect-ratio: 16 / 9; padding: 0; border: 2px solid transparent; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); cursor: pointer; }
+.thumbs button[aria-current="true"] { border-color: var(--brand-ink); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
 .product-inner { padding: 1.5rem 1.6rem 1.6rem; display: grid; gap: 1rem; }
 .product-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
 .product-desc { color: var(--muted); max-width: 64ch; }
@@ -509,6 +514,7 @@ dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
   </button>
   <div class="media" id="pdMedia"></div>
+  <div class="thumbs" id="pdThumbs"></div>
   <div class="product-inner">
     <div>
       <div class="card-cat" id="pdCat"></div>
@@ -619,6 +625,9 @@ function imageFor(pkg) {
   if (pkg.image) return pkg.image;
   const media = (pkg.media || []).find(m => m.type === "image" && m.primary) || (pkg.media || []).find(m => m.type === "image");
   return media ? media.url : null;
+}
+function imagesFor(pkg) {
+  return [...new Set([imageFor(pkg), pkg.image, ...(pkg.media || []).filter(m => m.type === "image").map(m => m.url)].filter(Boolean))];
 }
 function artHtml(pkg, alt = "") {
   const src = imageFor(pkg);
@@ -746,6 +755,9 @@ function openProduct(id) {
   if (!p) return;
   currentProduct = p;
   $("#pdMedia").innerHTML = artHtml(p, p.name);
+  const imgs = imagesFor(p);
+  $("#pdThumbs").innerHTML = imgs.length > 1 ? imgs.map((src, i) =>
+    `<button type="button" data-thumb="${esc(src)}" aria-label="Image ${i + 1} of ${imgs.length}" aria-current="${i === 0}"><img src="${esc(src)}" alt="" loading="lazy"></button>`).join("") : "";
   $("#pdCat").textContent = p._catName;
   $("#pdTitle").textContent = p.name;
   $("#pdBadges").innerHTML = badgesFor(p).map(b => `<span class="badge">${esc(b)}</span>`).join("");
@@ -946,9 +958,13 @@ function showToast(text) {
    Events
    ========================================================= */
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-open],[data-add],[data-remove],[data-filter],[data-close],[data-clear-search],[data-browse]");
+  const t = e.target.closest("[data-open],[data-add],[data-remove],[data-filter],[data-close],[data-clear-search],[data-browse],[data-thumb]");
   if (!t) return;
-  if (t.dataset.open) openProduct(Number(t.dataset.open));
+  if (t.dataset.thumb) {
+    $("#pdMedia img").src = t.dataset.thumb;
+    t.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-current", b === t));
+  }
+  else if (t.dataset.open) openProduct(Number(t.dataset.open));
   else if (t.dataset.add) addToCart(Number(t.dataset.add));
   else if (t.dataset.remove) removeFromCart(Number(t.dataset.remove));
   else if (t.dataset.filter) { state.filter = t.dataset.filter; renderChips(); renderGrid(); }
