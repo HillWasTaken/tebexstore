@@ -3,518 +3,388 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hillstudio Store – FiveM scripts and Discord bots</title>
-<meta name="description" content="Ready-to-use FiveM scripts and Discord bots for roleplay communities. ESX, QBCore and Qbox support, delivered through Cfx.re escrow.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234F46E5'/%3E%3Cpath d='M20 16v32M44 16v32M20 32h24' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>HStudio Store – FiveM scripts and Discord bots</title>
+<meta name="description" content="Premium FiveM scripts and Discord bots for roleplay servers. ESX, QBCore and Qbox support, delivered through Cfx.re escrow.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236C65EF'/%3E%3Cpath d='M22 17v30M42 17v30M22 32h20' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://js.tebex.io/v/1.js" defer></script>
 <style>
-/* ---------- Tokens ---------- */
-:root {
-  color-scheme: light;
-  --bg: #F5F5FA;
-  --surface: #FFFFFF;
-  --surface-2: #EEEEF7;
-  --line: #DFE0EE;
-  --text: #15162B;
-  --muted: #5B5D7C;
-  --brand: #4F46E5;
-  --brand-ink: #4338CA;      /* brand as text on light */
-  --on-brand: #FFFFFF;
-  --ok: #12925A;
-  --danger: #C2264B;
-  --embed-bg: #F2F3F8;
-  --shadow: 0 12px 32px -12px rgba(21, 22, 43, .22);
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 16px;
-  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
-  --font-body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --wrap: 1160px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #0F1020;
-    --surface: #171933;
-    --surface-2: #1E2142;
-    --line: #2B2E55;
-    --text: #E9EAF7;
-    --muted: #A0A2C8;
-    --brand-ink: #9D97FF;
-    --ok: #3DD68C;
-    --danger: #FF6B8B;
-    --embed-bg: #1A1C38;
-    --shadow: 0 16px 40px -16px rgba(0, 0, 0, .7);
-  }
-}
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0F1020; --surface: #171933; --surface-2: #1E2142; --line: #2B2E55;
-  --text: #E9EAF7; --muted: #A0A2C8; --brand-ink: #9D97FF; --ok: #3DD68C;
-  --danger: #FF6B8B; --embed-bg: #1A1C38; --shadow: 0 16px 40px -16px rgba(0,0,0,.7);
-}
+:root{color-scheme:dark;--bg:#05060A;--bg-2:#0A0C14;--surface:#0C0F18;--surface-2:#121624;--line:#1E2436;--line-soft:rgba(90,210,255,.18);
+--text:#E8F1FF;--muted:#8A97B5;--brand:#7C5CFF;--brand-2:#5A3BE8;--brand-ink:#5AD2FF;--cyan:#5AD2FF;--on-brand:#fff;--ok:#39FF9C;--warn:#FFB547;--danger:#FF4D7D;
+--shadow:0 24px 60px -24px rgba(0,0,0,.9);--glow:0 0 0 1px rgba(90,210,255,.4),0 20px 60px -20px rgba(90,210,255,.45);
+--radius-sm:6px;--radius:10px;--radius-lg:12px;--font-display:"Space Grotesk",system-ui,sans-serif;--font-body:"Space Grotesk",system-ui,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;--wrap:1200px;--ease:cubic-bezier(.2,.7,.2,1)}
+/* ---------- Sections ---------- */
+.section { padding: clamp(4rem, 8vw, 6.5rem) 0; position: relative; }
+.section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 2rem; }
+.section-head h2 { margin-top: .6rem; }
+.section-head p { color: var(--muted); margin-top: .7rem; max-width: 36rem; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-html { scroll-behavior: smooth; scroll-padding-top: calc(76px + env(safe-area-inset-top, 0px)); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); background: var(--bg); }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: var(--font-body); font-size: 1rem; line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-body::before {
-  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  z-index: 60; background: var(--bg);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 img { max-width: 100%; display: block; }
 a { color: var(--brand-ink); }
 button, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
-:focus-visible { outline: 2px solid var(--brand-ink); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--brand-ink); outline-offset: 3px; border-radius: 6px; }
 .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: 1rem; top: -100px; z-index: 100; background: var(--brand); color: var(--on-brand); padding: .6rem 1rem; border-radius: var(--radius-sm); }
 .skip:focus { top: calc(1rem + env(safe-area-inset-top, 0px)); }
 
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
-h1 { font-size: clamp(2.2rem, 5.4vw, 3.6rem); font-weight: 700; }
-h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; }
-h3 { font-size: 1.15rem; font-weight: 600; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; margin: 0; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.6rem, 6.2vw, 4.6rem); font-weight: 800; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); font-weight: 700; }
+h3 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
 p { margin: 0; }
+.eyebrow { display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-ink); }
+.grad { background: linear-gradient(90deg, #FFFFFF 0%, #B9B4FF 45%, var(--cyan) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* ---------- Buttons ---------- */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  min-height: 44px; padding: .65rem 1.15rem; border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  min-height: 46px; padding: .7rem 1.25rem; border-radius: var(--radius-sm);
   border: 1px solid transparent; font-weight: 600; text-decoration: none; line-height: 1.2; white-space: nowrap;
-  transition: background-color .15s, border-color .15s, transform .1s;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background-color .2s, border-color .2s;
 }
-.btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--brand); color: var(--on-brand); }
-.btn-primary:hover { background: #4338CA; }
-.btn-ghost { background: transparent; border-color: var(--line); color: var(--text); }
-.btn-ghost:hover { border-color: var(--brand-ink); }
+.btn:active { transform: translateY(1px) scale(.98); }
+.btn-primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: var(--on-brand); box-shadow: 0 10px 30px -12px rgba(108,101,239,.9); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -12px rgba(108,101,239,1); }
+.btn-ghost { background: rgba(255,255,255,.04); border-color: var(--line); color: var(--text); }
+.btn-ghost:hover { border-color: var(--brand-ink); background: rgba(108,101,239,.1); transform: translateY(-2px); }
 .btn[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
 .btn-block { width: 100%; }
 .btn svg { width: 18px; height: 18px; flex: none; }
+.btn .arrow { transition: transform .25s var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
 
 /* ---------- Header ---------- */
 .site-header {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  background: rgba(11,10,31,.6); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid transparent; transition: border-color .3s, background-color .3s;
 }
-.header-inner { display: flex; align-items: center; gap: 1.5rem; height: 68px; }
-.logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--text); font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
-.logo-mark { width: 34px; height: 34px; border-radius: 9px; background: var(--brand); display: grid; place-items: center; }
-.logo-mark svg { width: 18px; height: 18px; }
-.main-nav { display: flex; gap: 1.5rem; margin-left: auto; }
-.main-nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
-.main-nav a:hover { color: var(--text); }
+.site-header.scrolled { border-bottom-color: var(--line-soft); background: rgba(11,10,31,.82); }
+.header-inner { display: flex; align-items: center; gap: 1.5rem; height: 72px; }
+.logo { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--text); font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; }
+.logo-mark { width: 38px; height: 38px; border-radius: 11px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); display: grid; place-items: center; box-shadow: 0 8px 22px -8px rgba(108,101,239,.9); transition: transform .4s var(--ease); }
+.logo:hover .logo-mark { transform: rotate(-8deg) scale(1.06); }
+.logo-mark svg { width: 19px; height: 19px; }
+.main-nav { display: flex; gap: .4rem; margin-left: auto; }
+.main-nav a { color: var(--muted); text-decoration: none; font-weight: 500; padding: .45rem .8rem; border-radius: 8px; transition: color .2s, background-color .2s; }
+.main-nav a:hover { color: var(--text); background: rgba(255,255,255,.05); }
 .cart-btn { position: relative; margin-left: .5rem; }
 .cart-count {
   min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
   background: var(--brand); color: var(--on-brand); font-size: .78rem; font-weight: 700;
-  display: inline-grid; place-items: center;
+  display: inline-grid; place-items: center; transition: transform .3s var(--ease);
 }
 .cart-count[data-empty="true"] { background: var(--surface-2); color: var(--muted); }
+.cart-count.bump { animation: bump .5s var(--ease); }
+@keyframes bump { 30% { transform: scale(1.4); } 60% { transform: scale(.9); } }
 @media (max-width: 760px) { .main-nav { display: none; } .cart-btn { margin-left: auto; } }
 
 /* ---------- Banners ---------- */
-.notice { padding: .75rem 0; font-size: .95rem; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.notice { padding: .75rem 0; font-size: .95rem; border-bottom: 1px solid var(--line); background: var(--surface); }
 .notice[hidden] { display: none; }
-.notice.success { background: color-mix(in srgb, var(--ok) 14%, var(--surface)); }
+.notice.success { background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
 .notice code { font-family: var(--font-mono); font-size: .88em; }
 
-/* ---------- Hero ---------- */
-.hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 6vw, 4.5rem); }
-.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-.hero-copy p { color: var(--muted); font-size: 1.15rem; max-width: 34rem; margin-top: 1.25rem; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
-@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
-
-/* Discord-style log channel: the one memorable element */
-.channel {
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow); overflow: hidden;
-}
-.channel-head { display: flex; align-items: center; gap: .5rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); font-weight: 600; }
-.channel-head .hash { color: var(--muted); font-size: 1.2rem; line-height: 1; }
-.channel-head .live { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .85rem; font-weight: 500; color: var(--muted); }
-.channel-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
-.channel-body { padding: 1rem 1.1rem 1.2rem; display: grid; gap: .9rem; }
-.msg { display: grid; grid-template-columns: 36px 1fr; gap: .75rem; }
-.avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--brand); display: grid; place-items: center; }
-.avatar svg { width: 16px; height: 16px; }
-.msg-meta { font-size: .9rem; display: flex; align-items: baseline; gap: .45rem; }
-.msg-meta b { font-weight: 600; }
-.bot-tag { font-size: .68rem; font-weight: 700; background: var(--brand); color: var(--on-brand); padding: 1px 5px; border-radius: 4px; }
-.msg-meta time { color: var(--muted); font-size: .8rem; }
-.embed {
-  margin-top: .35rem; background: var(--embed-bg); border-left: 4px solid var(--c, var(--brand));
-  border-radius: 4px; padding: .6rem .8rem; font-size: .9rem;
-}
-.embed strong { display: block; font-weight: 600; margin-bottom: .15rem; }
-.embed span { color: var(--muted); }
-.embed code { font-family: var(--font-mono); font-size: .82rem; color: var(--text); }
-@media (prefers-reduced-motion: no-preference) {
-  .msg { opacity: 0; transform: translateY(8px); animation: msg-in .45s cubic-bezier(.2,.7,.2,1) forwards; }
-  .msg:nth-child(1) { animation-delay: .25s; }
-  .msg:nth-child(2) { animation-delay: .9s; }
-  .msg:nth-child(3) { animation-delay: 1.55s; }
-  @keyframes msg-in { to { opacity: 1; transform: none; } }
-}
-
-/* ---------- Trust strip ---------- */
-.trust { border-block: 1px solid var(--line); background: var(--surface); }
-.trust ul { list-style: none; margin: 0 auto; padding: 1.25rem 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-.trust li { display: flex; gap: .7rem; align-items: center; font-weight: 500; font-size: .95rem; }
-.trust svg { width: 22px; height: 22px; color: var(--brand-ink); flex: none; }
-@media (max-width: 900px) { .trust ul { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .trust ul { grid-template-columns: 1fr; } }
-
-/* ---------- Store ---------- */
-.section { padding: clamp(3rem, 7vw, 5rem) 0; }
-.section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 1.75rem; }
-.section-head p { color: var(--muted); margin-top: .5rem; max-width: 36rem; }
-.toolbar { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-bottom: 1.75rem; }
+/* Store toolbar */
+.toolbar { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-bottom: 2rem; }
 .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
 .chip {
-  min-height: 40px; padding: .45rem .95rem; border-radius: 999px; border: 1px solid var(--line);
-  background: var(--surface); font-weight: 500; font-size: .95rem;
+  min-height: 42px; padding: .45rem 1.05rem; border-radius: 999px; border: 1px solid var(--line);
+  background: rgba(255,255,255,.03); font-weight: 600; font-size: .95rem; color: var(--muted);
+  transition: all .25s var(--ease);
 }
-.chip:hover { border-color: var(--brand-ink); }
-.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
-.search { margin-left: auto; position: relative; flex: 0 1 280px; }
-.search svg { position: absolute; left: .8rem; top: 50%; translate: 0 -50%; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+.chip:hover { border-color: var(--brand-ink); color: var(--text); }
+.chip[aria-pressed="true"] { background: linear-gradient(135deg, var(--brand), var(--brand-2)); border-color: transparent; color: var(--on-brand); box-shadow: 0 8px 22px -10px rgba(108,101,239,.9); }
+.search { margin-left: auto; position: relative; flex: 0 1 300px; }
+.search svg { position: absolute; left: .9rem; top: 50%; translate: 0 -50%; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
 .search input {
-  width: 100%; min-height: 42px; padding: .5rem .9rem .5rem 2.4rem; border-radius: var(--radius-sm);
-  border: 1px solid var(--line); background: var(--surface);
+  width: 100%; min-height: 44px; padding: .5rem .9rem .5rem 2.5rem; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); background: rgba(255,255,255,.03); transition: border-color .2s, box-shadow .2s;
 }
+.search input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px rgba(108,101,239,.2); }
 .search input::placeholder { color: var(--muted); }
 @media (max-width: 640px) { .search { margin-left: 0; flex-basis: 100%; } }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+/* Product grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.4rem; }
 .card {
   position: relative; display: flex; flex-direction: column; background: var(--surface);
-  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
-  transition: border-color .15s;
+  border: 1px solid var(--line-soft); border-radius: var(--radius-lg); overflow: hidden;
+  transition: transform .4s var(--ease), border-color .3s, box-shadow .4s var(--ease);
+  --mx: 50%; --my: 0%;
 }
-.card:hover, .card:focus-within { border-color: color-mix(in srgb, var(--brand-ink) 60%, var(--line)); }
-.card-media { aspect-ratio: 16 / 9; background: var(--surface-2); overflow: hidden; }
-.card-media img { width: 100%; height: 100%; object-fit: cover; }
-.card-body { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
-.card-cat { font-size: .82rem; color: var(--muted); font-weight: 500; }
+.card::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(108,101,239,.22), transparent 45%); }
+.card:hover, .card:focus-within { transform: translateY(-8px); border-color: rgba(140,132,255,.55); box-shadow: var(--glow); }
+.card:hover::before { opacity: 1; }
+.card-media { aspect-ratio: 16 / 9; background: var(--surface-2); overflow: hidden; position: relative; }
+.card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.card:hover .card-media img { transform: scale(1.06); }
+.card-media::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(transparent, rgba(21,19,47,.85)); }
+.sale { position: absolute; top: .8rem; left: .8rem; z-index: 2; background: var(--danger); color: #fff; font-size: .75rem; font-weight: 700; padding: .25rem .6rem; border-radius: 999px; }
+.card-body { padding: 1.15rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; position: relative; z-index: 1; }
+.card-cat { font-size: .78rem; color: var(--brand-ink); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .card h3 button { all: unset; cursor: pointer; }
 .card h3 button::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .card h3 button:focus-visible { outline: none; }
 .card:has(h3 button:focus-visible) { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
-.card-excerpt { color: var(--muted); font-size: .93rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-excerpt { color: var(--muted); font-size: .94rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .badges { display: flex; flex-wrap: wrap; gap: .35rem; }
-.badge { font-size: .75rem; font-weight: 600; padding: .15rem .5rem; border-radius: 4px; background: var(--surface-2); color: var(--muted); }
-.card-foot { margin-top: auto; padding-top: .5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
-.card-foot .btn { position: relative; z-index: 2; min-height: 40px; padding: .5rem .9rem; }
-.price { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+.badge { font-size: .74rem; font-weight: 600; padding: .18rem .55rem; border-radius: 6px; background: rgba(108,101,239,.14); color: #CFCCF5; border: 1px solid var(--line-soft); }
+.card-foot { margin-top: auto; padding-top: .6rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+.card-foot .btn { position: relative; z-index: 2; min-height: 42px; padding: .55rem 1rem; }
+.price { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; }
 .price s { font-family: var(--font-body); font-weight: 500; font-size: .85rem; color: var(--muted); margin-right: .35rem; }
 
 .placeholder-art { width: 100%; height: 100%; display: grid; place-items: center; background:
-  linear-gradient(135deg, color-mix(in srgb, var(--brand) 22%, var(--surface-2)), var(--surface-2)); }
-.placeholder-art span { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; color: var(--brand-ink); opacity: .8; }
+  radial-gradient(circle at 70% 20%, rgba(108,101,239,.45), transparent 55%), linear-gradient(135deg, #221E52, #15132F); }
+.placeholder-art span { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--brand-ink); }
 
-.skeleton { border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); height: 330px; position: relative; overflow: hidden; }
-@media (prefers-reduced-motion: no-preference) {
-  .skeleton::after { content: ""; position: absolute; inset: 0; translate: -100% 0;
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text) 6%, transparent), transparent);
-    animation: shimmer 1.3s infinite; }
-  @keyframes shimmer { to { translate: 100% 0; } }
-}
-.state { text-align: center; padding: 3rem 1rem; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); }
+.skeleton { border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--line-soft); height: 380px; position: relative; overflow: hidden; }
+.skeleton::after { content: ""; position: absolute; inset: 0; translate: -100% 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent); animation: shimmer 1.3s infinite; }
+@keyframes shimmer { to { translate: 100% 0; } }
+.state { text-align: center; padding: 3rem 1rem; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); grid-column: 1/-1; }
 .state h3 { color: var(--text); margin-bottom: .4rem; }
 .state .btn { margin-top: 1rem; }
 
-/* ---------- Custom work ---------- */
-.custom { background: var(--surface); border-block: 1px solid var(--line); }
-.custom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-.custom p { color: var(--muted); margin-top: .9rem; max-width: 32rem; }
-.custom ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
-.custom li { display: flex; gap: .7rem; align-items: flex-start; }
-.custom li svg { width: 20px; height: 20px; color: var(--ok); flex: none; margin-top: 3px; }
-.custom .btn { margin-top: 1.75rem; }
-@media (max-width: 800px) { .custom-grid { grid-template-columns: 1fr; } }
-
-/* ---------- FAQ ---------- */
-.faq { max-width: 760px; }
-.faq details { border-bottom: 1px solid var(--line); }
-.faq summary {
-  list-style: none; cursor: pointer; padding: 1.1rem 2.5rem 1.1rem 0; position: relative;
-  font-weight: 600; font-size: 1.05rem;
-}
+/* FAQ */
+.faq { max-width: 820px; margin-inline: auto; display: grid; gap: .8rem; }
+.faq details { border: 1px solid var(--line-soft); border-radius: var(--radius); background: rgba(21,19,47,.6); transition: border-color .3s, background-color .3s; }
+.faq details[open] { border-color: rgba(140,132,255,.5); background: rgba(108,101,239,.08); }
+.faq summary { list-style: none; cursor: pointer; padding: 1.15rem 3.2rem 1.15rem 1.35rem; position: relative; font-weight: 600; font-size: 1.05rem; }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after {
-  content: ""; position: absolute; right: .4rem; top: 50%; width: 10px; height: 10px;
-  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
-  transform: translateY(-70%) rotate(45deg); transition: transform .2s;
-}
-.faq details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
-.faq details p { color: var(--muted); padding: 0 0 1.2rem; max-width: 64ch; }
+.faq summary::after { content: "+"; position: absolute; right: 1.2rem; top: 50%; translate: 0 -50%; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: rgba(108,101,239,.18); color: var(--brand-ink); font-size: 1.2rem; transition: rotate .3s var(--ease); }
+.faq details[open] summary::after { rotate: 45deg; }
+.faq details p { color: var(--muted); padding: 0 1.35rem 1.25rem; max-width: 64ch; }
+.faq details[open] p { animation: fadeDown .35s var(--ease); }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-6px); } }
 
-/* ---------- Footer ---------- */
-.site-footer { padding: 2.5rem 0 3rem; color: var(--muted); font-size: .92rem; }
+/* Footer */
+.site-footer { padding: 2.5rem 0 3rem; color: var(--muted); font-size: .92rem; border-top: 1px solid var(--line-soft); }
 .footer-inner { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
-.footer-links a { color: var(--muted); }
+.footer-links a { color: var(--muted); text-decoration: none; }
 .footer-links a:hover { color: var(--text); }
 
-/* ---------- Dialogs: product + cart ---------- */
+
+/* ---------- Dialogs ---------- */
 dialog { border: none; padding: 0; color: var(--text); background: var(--surface); }
 html:has(dialog[open]) { overflow: hidden; }
 dialog, dialog * { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-/* Safari ignores scrollbar-color */
 dialog ::-webkit-scrollbar, dialog::-webkit-scrollbar { width: 8px; height: 8px; }
 dialog ::-webkit-scrollbar-thumb, dialog::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
 dialog ::-webkit-scrollbar-track, dialog::-webkit-scrollbar-track { background: transparent; }
-dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
-.product-dialog { width: min(100% - 2rem, 760px); max-height: min(90vh, 900px); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-.product-dialog .media { aspect-ratio: 16 / 9; background: var(--surface-2); }
-.product-dialog .media img { width: 100%; height: 100%; object-fit: cover; }
-.thumbs { display: flex; gap: .5rem; padding: .75rem 1.6rem 0; overflow-x: auto; }
+dialog::backdrop { background: rgba(5,4,16,.7); backdrop-filter: blur(6px); }
+.product-dialog { width: min(100% - 2rem, 800px); max-height: min(90vh, 920px); border-radius: var(--radius-lg); box-shadow: var(--shadow), var(--glow); border: 1px solid var(--line-soft); }
+.product-dialog[open] { animation: pop .4s var(--ease); }
+.product-dialog[open]::backdrop { animation: fade .3s ease; }
+@keyframes pop { from { opacity: 0; transform: translateY(20px) scale(.96); } }
+@keyframes fade { from { opacity: 0; } }
+.product-dialog .media { aspect-ratio: 16 / 9; background: var(--surface-2); overflow: hidden; }
+.product-dialog .media img { width: 100%; height: 100%; object-fit: cover; animation: fade .4s ease; }
+.thumbs { display: flex; gap: .5rem; padding: .85rem 1.6rem 0; overflow-x: auto; }
 .thumbs:empty { display: none; }
-.thumbs button { flex: none; width: 96px; aspect-ratio: 16 / 9; padding: 0; border: 2px solid transparent; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); cursor: pointer; }
-.thumbs button[aria-current="true"] { border-color: var(--brand-ink); }
+.thumbs button { flex: none; width: 100px; aspect-ratio: 16 / 9; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: var(--surface-2); cursor: pointer; opacity: .65; transition: opacity .2s, border-color .2s; }
+.thumbs button:hover { opacity: 1; }
+.thumbs button[aria-current="true"] { border-color: var(--brand); opacity: 1; }
 .thumbs img { width: 100%; height: 100%; object-fit: cover; }
 .product-inner { padding: 1.5rem 1.6rem 1.6rem; display: grid; gap: 1rem; }
-.product-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+.product-inner h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: .3rem; }
 .product-desc { color: var(--muted); max-width: 64ch; }
 .product-desc :is(h1,h2,h3,h4) { color: var(--text); font-size: 1.05rem; margin: 1.1rem 0 .4rem; font-family: var(--font-body); font-weight: 700; }
 .product-desc ul { padding-left: 1.2rem; }
 .product-desc p { margin: .5rem 0; }
-.product-desc img { border-radius: var(--radius-sm); }
-.product-buy { position: sticky; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); padding: 1rem 1.6rem calc(1rem + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex: none; }
-.icon-btn:hover { border-color: var(--brand-ink); }
+.product-desc img { border-radius: 8px; }
+.product-buy { position: sticky; bottom: 0; background: rgba(21,19,47,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line-soft); padding: 1rem 1.6rem calc(1rem + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex: none; transition: border-color .2s, rotate .3s var(--ease); }
+.icon-btn:hover { border-color: var(--brand-ink); rotate: 90deg; }
 .icon-btn svg { width: 18px; height: 18px; }
-.dialog-close { position: absolute; top: .9rem; right: .9rem; z-index: 3; background: color-mix(in srgb, var(--surface) 85%, transparent); }
+.dialog-close { position: absolute; top: .9rem; right: .9rem; z-index: 3; background: rgba(21,19,47,.85); }
 
-.cart-dialog {
-  margin: 0 0 0 auto; height: 100%; max-height: 100%; width: min(100%, 420px);
-  display: none; flex-direction: column; border-left: 1px solid var(--line);
-  padding-top: env(safe-area-inset-top, 0px);
-}
-.cart-dialog[open] { display: flex; }
-@media (prefers-reduced-motion: no-preference) {
-  .cart-dialog[open] { animation: slide-in .25s cubic-bezier(.2,.7,.2,1); }
-  @keyframes slide-in { from { translate: 100% 0; } }
-}
-.cart-head { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--line); }
-.cart-items { list-style: none; margin: 0; padding: .5rem 1.25rem; overflow-y: auto; flex: 1; }
-.cart-item { display: grid; grid-template-columns: 64px 1fr auto; gap: .9rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--line); }
-.cart-item .thumb { width: 64px; aspect-ratio: 16/10; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); }
+.cart-dialog { margin: 0 0 0 auto; height: 100%; max-height: 100%; width: min(100%, 440px); display: none; flex-direction: column; border-left: 1px solid var(--line-soft); padding-top: env(safe-area-inset-top, 0px); }
+.cart-dialog[open] { display: flex; animation: slide-in .35s var(--ease); }
+@keyframes slide-in { from { translate: 100% 0; } }
+.cart-head { display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 1.35rem; border-bottom: 1px solid var(--line-soft); }
+.cart-items { list-style: none; margin: 0; padding: .5rem 1.35rem; overflow-y: auto; flex: 1; }
+.cart-item { display: grid; grid-template-columns: 72px 1fr auto; gap: .95rem; align-items: center; padding: .95rem 0; border-bottom: 1px solid var(--line-soft); animation: toastIn .35s var(--ease) both; }
+.cart-item .thumb { width: 72px; aspect-ratio: 16/10; border-radius: 8px; overflow: hidden; background: var(--surface-2); }
 .cart-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .cart-item .thumb .placeholder-art span { font-size: 1.1rem; }
 .cart-item b { display: block; font-weight: 600; line-height: 1.3; }
 .cart-item small { color: var(--muted); }
 .remove { background: none; border: none; color: var(--muted); font-size: .88rem; text-decoration: underline; padding: .4rem; }
 .remove:hover { color: var(--danger); }
-.cart-empty { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+.cart-empty { text-align: center; padding: 3.5rem 1rem; color: var(--muted); }
 .cart-empty .btn { margin-top: 1rem; }
-.cart-foot { border-top: 1px solid var(--line); padding: 1.1rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px)); display: grid; gap: .8rem; }
+.cart-foot { border-top: 1px solid var(--line-soft); padding: 1.15rem 1.35rem calc(1.3rem + env(safe-area-inset-bottom, 0px)); display: grid; gap: .8rem; }
 .cart-total { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
-.cart-total .price { font-size: 1.35rem; }
+.cart-total .price { font-size: 1.5rem; }
 .cart-note { font-size: .86rem; color: var(--muted); }
 .cart-signed { font-size: .9rem; display: flex; align-items: center; gap: .45rem; }
 .cart-signed::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
 .cart-error { font-size: .9rem; color: var(--danger); }
 .cart-error[hidden], .cart-signed[hidden], .cart-foot[hidden] { display: none; }
 
-/* ---------- Toast ---------- */
+/* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 80;
-  background: var(--text); color: var(--bg); padding: .7rem .8rem .7rem 1.1rem; border-radius: var(--radius);
-  display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow); font-weight: 500;
-  max-width: calc(100% - 2rem);
+  background: rgba(21,19,47,.95); border: 1px solid rgba(140,132,255,.45); color: var(--text); padding: .75rem .8rem .75rem 1.1rem; border-radius: 14px;
+  display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow), var(--glow); font-weight: 500; backdrop-filter: blur(10px);
+  max-width: calc(100% - 2rem); animation: toastUp .45s var(--ease);
 }
+.toast::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 12px var(--ok); flex: none; }
+@keyframes toastUp { from { opacity: 0; transform: translateY(20px); } }
 .toast[hidden] { display: none; }
-.toast button { background: none; border: 1px solid color-mix(in srgb, var(--bg) 40%, transparent); color: var(--bg); border-radius: var(--radius-sm); padding: .35rem .7rem; font-weight: 600; }
+.toast button { background: var(--brand); border: none; color: #fff; border-radius: 8px; padding: .45rem .8rem; font-weight: 600; }
 
-.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; }
-@media (prefers-reduced-motion: no-preference) { .spinner { animation: spin .7s linear infinite; } @keyframes spin { to { rotate: 360deg; } } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
+}
+
+
+body{background:var(--bg)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+ radial-gradient(900px 500px at 85% -10%,rgba(124,92,255,.28),transparent 60%),radial-gradient(700px 500px at -10% 40%,rgba(90,210,255,.14),transparent 60%),
+ linear-gradient(rgba(90,210,255,.05) 1px,transparent 1px) 0 0/100% 4px}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(5,6,10,.75);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.logo-mark{border-radius:6px;background:linear-gradient(135deg,#7C5CFF,#5AD2FF);box-shadow:0 0 20px rgba(90,210,255,.6)}
+.btn{border-radius:6px;font-family:var(--font-mono);font-size:.92rem;letter-spacing:.02em}
+.btn-primary{background:linear-gradient(90deg,#7C5CFF,#5AD2FF);color:#05060A;box-shadow:0 0 24px rgba(90,210,255,.45)}
+.btn-primary:hover{box-shadow:0 0 40px rgba(90,210,255,.75);transform:translateY(-2px)}
+.btn-ghost{background:transparent;border-color:var(--line-soft)}
+.btn-ghost:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(90,210,255,.25)}
+.eyebrow{font-family:var(--font-mono);color:var(--cyan);letter-spacing:.08em;text-transform:none}
+.eyebrow::before{content:"// "}
+h1,h2{font-weight:700;letter-spacing:-.03em}
+.hero{padding:clamp(3rem,8vw,6rem) 0 4rem}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr}}
+.status{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.85rem;color:var(--ok);border:1px solid rgba(57,255,156,.3);background:rgba(57,255,156,.06);padding:.35rem .8rem;border-radius:4px;margin-bottom:1.6rem}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.glitch{position:relative;display:inline-block;color:#fff}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none}
+.glitch::before{color:#5AD2FF;transform:translate(2px,0);clip-path:inset(0 0 60% 0);animation:g1 3.2s infinite steps(1)}
+.glitch::after{color:#FF4D7D;transform:translate(-2px,0);clip-path:inset(55% 0 0 0);animation:g2 3.2s infinite steps(1)}
+@keyframes g1{0%,92%,100%{transform:none;opacity:0}93%{transform:translate(3px,-1px);opacity:.9}96%{transform:translate(-2px,1px);opacity:.9}}
+@keyframes g2{0%,92%,100%{transform:none;opacity:0}94%{transform:translate(-3px,1px);opacity:.9}97%{transform:translate(2px,0);opacity:.9}}
+.neon{background:linear-gradient(90deg,#7C5CFF,#5AD2FF);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+.lead{color:var(--muted);font-size:1.15rem;margin-top:1.3rem;max-width:34rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.term{border:1px solid var(--line-soft);border-radius:10px;background:rgba(10,12,20,.9);box-shadow:0 0 0 1px rgba(124,92,255,.15),0 30px 80px -30px rgba(90,210,255,.4);overflow:hidden}
+.term-top{display:flex;align-items:center;gap:.45rem;padding:.7rem .9rem;border-bottom:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.8rem;color:var(--muted)}
+.term-top b{width:11px;height:11px;border-radius:50%;background:#FF5F57}.term-top b:nth-child(2){background:#FEBC2E}.term-top b:nth-child(3){background:#28C840}
+.term-top span{margin-left:.6rem}
+.term-body{font-family:var(--font-mono);font-size:.88rem;line-height:1.75;padding:1rem 1.1rem 1.3rem;min-height:320px;white-space:pre-wrap;color:#C9D6F5}
+.term-body .p{color:var(--cyan)}.term-body .ok{color:var(--ok)}.term-body .dim{color:#5D6886}.term-body .hs{color:#B9A6FF}
+.caret{display:inline-block;width:.6em;height:1.1em;background:var(--cyan);vertical-align:-.2em;animation:blink 1s steps(1) infinite}
+.ticker{border-block:1px solid var(--line-soft);overflow:hidden;background:rgba(12,15,24,.6)}
+.ticker .marquee-track{display:flex;width:max-content;gap:3rem;padding:.9rem 0;animation:scroll 28s linear infinite;font-family:var(--font-mono);font-size:.88rem;color:var(--muted)}
+.ticker .marquee-track span::before{content:"▸ ";color:var(--cyan)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.card{border-radius:10px;background:linear-gradient(180deg,rgba(18,22,36,.9),rgba(10,12,20,.95));border:1px solid var(--line)}
+.card:hover,.card:focus-within{transform:translateY(-6px);box-shadow:var(--glow);border-color:rgba(90,210,255,.6)}
+.card::before{background:radial-gradient(360px circle at var(--mx) var(--my),rgba(90,210,255,.16),transparent 45%)}
+.card-media::after{background:linear-gradient(transparent,rgba(10,12,20,.95))}
+.card-cat{font-family:var(--font-mono);color:var(--cyan);text-transform:none;letter-spacing:0}
+.card-cat::before{content:"~/"}
+.badge{font-family:var(--font-mono);background:rgba(90,210,255,.08);border-color:rgba(90,210,255,.25);color:#BFEAFF;border-radius:3px}
+.price{font-family:var(--font-mono);color:#fff}
+.chip{border-radius:4px;font-family:var(--font-mono);font-size:.88rem}
+.chip[aria-pressed="true"]{background:linear-gradient(90deg,#7C5CFF,#5AD2FF);color:#05060A}
+.search input{border-radius:4px;font-family:var(--font-mono);font-size:.9rem}
+.grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;border:1px solid var(--line-soft);border-radius:12px;padding:clamp(2rem,5vw,3.5rem);background:linear-gradient(135deg,rgba(124,92,255,.12),rgba(90,210,255,.05))}
+@media(max-width:820px){.split{grid-template-columns:1fr}}
+.split p{color:var(--muted);margin-top:1rem}
+.split .btn{margin-top:1.6rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;counter-reset:s;font-family:var(--font-mono);font-size:.92rem}
+.steps li{padding:.85rem 1rem;border:1px solid var(--line-soft);border-radius:6px;background:rgba(5,6,10,.6)}
+.steps li::before{counter-increment:s;content:"0" counter(s) "  ";color:var(--cyan)}
+.faq-head{justify-content:center;text-align:center}
+.faq details{border-radius:8px;background:rgba(12,15,24,.8);border-color:var(--line)}
+.faq summary::after{border-radius:4px;background:rgba(90,210,255,.12);color:var(--cyan)}
+.toast{border-color:rgba(90,210,255,.5);border-radius:8px;font-family:var(--font-mono)}
+.toast button{background:linear-gradient(90deg,#7C5CFF,#5AD2FF);color:#05060A}
+.placeholder-art{background:radial-gradient(circle at 70% 20%,rgba(90,210,255,.35),transparent 55%),#0C0F18}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#store">Skip to store</a>
-
-<header class="site-header">
+<header class="site-header " id="siteHeader">
   <div class="wrap header-inner">
-    <a class="logo" href="#top" aria-label="Hillstudio home">
-      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></span>
-      <span data-store-name>Hillstudio</span>
-    </a>
-    <nav class="main-nav" aria-label="Main">
-      <a href="#store">Store</a>
-      <a href="#custom">Custom work</a>
-      <a href="#faq">FAQ</a>
-      <a data-discord href="#" target="_blank" rel="noopener">Discord</a>
-      <!-- <a href="https://hillstudio.nl" target="_blank" rel="noopener">Studio (login)</a>   -->
-    </nav>
-    <button class="btn btn-ghost cart-btn" type="button" id="openCart" aria-haspopup="dialog">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-      Cart
-      <span class="cart-count" id="cartCount" data-empty="true" aria-live="polite">0</span>
-    </button>
+    <a class="logo" href="#top" aria-label="HStudio home"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></span><span data-store-name>HStudio</span></a>
+    <nav class="main-nav" aria-label="Main"><a href="#store">Store</a><a href="#custom">Custom work</a><a href="#faq">FAQ</a><a data-discord href="#" target="_blank" rel="noopener">Discord</a></nav>
+    <button class="btn btn-ghost cart-btn" type="button" id="openCart" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg> Cart <span class="cart-count" id="cartCount" data-empty="true" aria-live="polite">0</span></button>
   </div>
 </header>
-
-<div class="notice" id="demoNotice" hidden>
-  <div class="wrap">Demo mode: these products are examples. Add your Tebex public token to <code>CONFIG.tebexToken</code> to load your real store.</div>
-</div>
-<div class="notice success" id="paidNotice" role="status" hidden>
-  <div class="wrap">Payment received, thank you. Your FiveM scripts are now in your Cfx.re keymaster. For Discord bots, check your email for delivery instructions.</div>
-</div>
-
+<div class="notice" id="demoNotice" hidden><div class="wrap">Preview: this shows example products. On your real site, your live Tebex products load here.</div></div>
+<div class="notice success" id="paidNotice" role="status" hidden><div class="wrap">Payment received, thank you! Your FiveM scripts are now in your Cfx.re keymaster. For Discord bots, check your email for delivery instructions.</div></div>
 <main id="top">
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <h1>Scripts and bots that keep your FiveM server running smoothly</h1>
-        <p>Clean, configurable resources for ESX, QBCore and Qbox, plus Discord bots built for the way roleplay communities actually work.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#store">Browse the store</a>
-          <a class="btn btn-ghost" href="#custom">Request custom work</a>
-        </div>
-      </div>
-
-      <div class="channel" aria-label="Example of a server log channel in Discord" role="img">
-        <div class="channel-head" aria-hidden="true">
-          <span class="hash">#</span> server-logs
-          <span class="live"><span class="dot"></span> 128 online</span>
-        </div>
-        <div class="channel-body" aria-hidden="true">
-          <div class="msg">
-            <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></div>
-            <div>
-              <div class="msg-meta"><b>Server Logs</b><span class="bot-tag">BOT</span><time>Today at 21:04</time></div>
-              <div class="embed" style="--c: var(--ok)"><strong>Player connected</strong><span>Ramon_V joined · <code>license:3f9a…c21</code></span></div>
-            </div>
-          </div>
-          <div class="msg">
-            <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></div>
-            <div>
-              <div class="msg-meta"><b>Server Logs</b><span class="bot-tag">BOT</span><time>Today at 21:06</time></div>
-              <div class="embed" style="--c: #E8A33B"><strong>Money transfer</strong><span>Ramon_V sent €2,500 to Lisa_K via bank</span></div>
-            </div>
-          </div>
-          <div class="msg">
-            <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></div>
-            <div>
-              <div class="msg-meta"><b>Server Logs</b><span class="bot-tag">BOT</span><time>Today at 21:09</time></div>
-              <div class="embed" style="--c: var(--danger)"><strong>Admin action</strong><span>Staff member Joey kicked Mark_D · reason: RDM</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="trust" aria-label="Why buy here">
-    <ul class="wrap">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Delivered through Cfx.re escrow</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Works with ESX, QBCore and Qbox</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Support on Discord</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Secure checkout by Tebex</li>
-    </ul>
-  </section>
-
-  <section class="section" id="store" aria-labelledby="storeTitle">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <h2 id="storeTitle">Store</h2>
-          <p>Every resource comes with a config file, install guide and free updates.</p>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
-        <div class="search">
-          <label for="search" class="visually-hidden">Search products</label>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="search" type="search" placeholder="Search products" autocomplete="off">
-        </div>
-      </div>
-
-      <p class="visually-hidden" id="resultCount" aria-live="polite"></p>
-      <div class="grid" id="grid" aria-busy="true">
-        <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section custom" id="custom" aria-labelledby="customTitle">
-    <div class="wrap custom-grid">
-      <div>
-        <h2 id="customTitle">Need something made for your server?</h2>
-        <p>Tell us what you want to build. You get a clear quote before any work starts, and updates while it’s being made.</p>
-        <a class="btn btn-primary" data-discord href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 5.3A17 17 0 0 0 15.4 4l-.5 1.1a15.6 15.6 0 0 0-5.8 0L8.6 4a17 17 0 0 0-4.2 1.3C1.7 9.3 1 13.2 1.3 17a17 17 0 0 0 5.2 2.6l1.1-1.8a11 11 0 0 1-1.7-.8l.4-.3a12.2 12.2 0 0 0 11.4 0l.4.3-1.7.8 1.1 1.8a17 17 0 0 0 5.2-2.6c.4-4.4-.7-8.3-3.1-11.7zM8.7 14.7c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1zm6.6 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1z"/></svg>
-          Open a ticket on Discord
-        </a>
-      </div>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>New jobs, admin tools and server systems in Lua</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>Discord bots for tickets, whitelists, role sync and logging</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>Changes to scripts you already own, if their licence allows it</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>Bug fixing and performance checks for your resources</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" id="faq" aria-labelledby="faqTitle">
-    <div class="wrap">
-      <div class="section-head"><h2 id="faqTitle">Questions</h2></div>
-      <div class="faq">
-        <details>
-          <summary>How do I get a script after buying it?</summary>
-          <p>At checkout you sign in with your Cfx.re account. After payment the script appears in your keymaster under Granted Assets, ready to download and add to your server.</p>
-        </details>
-        <details>
-          <summary>Which frameworks are supported?</summary>
-          <p>Each product page lists what it works with. Most scripts support ESX, QBCore and Qbox out of the box, and use ox_lib where that makes sense.</p>
-        </details>
-        <details>
-          <summary>Can I change the code?</summary>
-          <p>Logic is protected by escrow, but everything you’d normally want to change is open: config files, language files and client-side UI.</p>
-        </details>
-        <details>
-          <summary>How are Discord bots delivered?</summary>
-          <p>You receive the bot files and a setup guide by email after payment. Prefer not to host it yourself? Ask on Discord about hosted options.</p>
-        </details>
-        <details>
-          <summary>What if something doesn’t work?</summary>
-          <p>Open a ticket on Discord with your server log. Because these are digital products, purchases are final once delivered, but every bug that’s on our side gets fixed.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <p>© <span id="year"></span> <span data-store-name>Hillstudio</span>. Payments are handled by Tebex, the merchant of record for all purchases.</p>
-    <nav class="footer-links" aria-label="Legal">
-      <a id="termsLink" href="#" target="_blank" rel="noopener">Terms of sale</a>
-      <a id="impressumLink" href="#" target="_blank" rel="noopener">Impressum</a>
-      <a data-discord href="#" target="_blank" rel="noopener">Discord</a>
-    </nav>
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <div class="status reveal"><i></i>all systems operational · 4 scripts live</div>
+    <h1 class="reveal" style="--d:.08s"><span class="glitch" data-text="Scripts that">Scripts that</span><br><span class="neon">run like code should.</span></h1>
+    <p class="lead reveal" style="--d:.16s">Premium FiveM scripts and Discord bots by HStudio. Lightweight, fully configurable and built for ESX, QBCore and Qbox.</p>
+    <div class="hero-actions reveal" style="--d:.24s"><a class="btn btn-primary" href="#store">./browse-store</a><a class="btn btn-ghost" href="#custom">./custom-work</a></div>
   </div>
-</footer>
-
+  <div class="term reveal" style="--d:.2s" role="img" aria-label="A server console starting HStudio scripts">
+    <div class="term-top"><b></b><b></b><b></b><span>fxserver — hstudio</span></div>
+    <div class="term-body" id="term" aria-hidden="true"></div>
+  </div>
+</div></section>
+<section class="ticker" aria-label="Why buy here"><div class="marquee-track" id="marquee">
+  <span>Cfx.re escrow</span><span>ESX · QBCore · Qbox</span><span>Lightweight and smooth</span><span>English &amp; Dutch</span><span>Free updates</span><span>Secure checkout by Tebex</span><span>Support on Discord</span>
+</div></section>
+<section class="section" id="store" aria-labelledby="storeTitle">
+  <div class="wrap">
+    <div class="section-head reveal"><div><span class="eyebrow">store</span><h2 id="storeTitle">Ready to deploy</h2><p>Every resource ships with a config file, an install guide and free updates.</p></div></div>
+    <div class="toolbar reveal">
+      <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+      <div class="search"><label for="search" class="visually-hidden">Search products</label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Search scripts" autocomplete="off"></div>
+    </div>
+    <p class="visually-hidden" id="resultCount" aria-live="polite"></p>
+    <div class="grid" id="grid" aria-busy="true"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+  </div>
+</section>
+<section class="section" id="custom" aria-labelledby="customTitle" style="padding-top:0"><div class="wrap"><div class="split reveal">
+  <div><span class="eyebrow">custom work</span><h2 id="customTitle">Need a system nobody else has?</h2><p>Tell us your idea. You get a clear price before any work starts, and updates while it's being built.</p>
+  <a class="btn btn-primary" data-discord href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 5.3A17 17 0 0 0 15.4 4l-.5 1.1a15.6 15.6 0 0 0-5.8 0L8.6 4a17 17 0 0 0-4.2 1.3C1.7 9.3 1 13.2 1.3 17a17 17 0 0 0 5.2 2.6l1.1-1.8a11 11 0 0 1-1.7-.8l.4-.3a12.2 12.2 0 0 0 11.4 0l.4.3-1.7.8 1.1 1.8a17 17 0 0 0 5.2-2.6c.4-4.4-.7-8.3-3.1-11.7zM8.7 14.7c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1zm6.6 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1z"/></svg> open a ticket</a></div>
+  <ol class="steps"><li>Open a ticket and tell us your idea</li><li>Get a clear price, no surprises</li><li>We build it and keep you updated</li><li>You test it, we polish it, it's yours</li></ol>
+</div></div></section>
+<section class="section" id="faq" aria-labelledby="faqTitle"><div class="wrap">
+  <div class="section-head reveal faq-head"><div><span class="eyebrow">faq</span><h2 id="faqTitle">Questions</h2></div></div>
+  <div class="faq"><details class="reveal"><summary>How do I get a script after buying it?</summary><p>At checkout you sign in with your Cfx.re account. After payment the script appears in your keymaster under Granted Assets, ready to download and add to your server.</p></details><details class="reveal"><summary>Which frameworks are supported?</summary><p>Each product page lists what it works with. Our scripts support ESX, QBCore and Qbox out of the box, and use ox_lib where that makes sense.</p></details><details class="reveal"><summary>Which languages are included?</summary><p>Every script comes in English and Dutch. You can add your own language through the open locale files.</p></details><details class="reveal"><summary>Can I change the code?</summary><p>Logic is protected by escrow, but everything you'd normally want to change is open: config files, language files and client-side UI.</p></details><details class="reveal"><summary>How are Discord bots delivered?</summary><p>You receive the bot files and a setup guide by email after payment. Prefer not to host it yourself? Ask on Discord about hosted options.</p></details><details class="reveal"><summary>What if something doesn't work?</summary><p>Open a ticket on Discord with your server log. Because these are digital products, purchases are final once delivered, but every bug that's on our side gets fixed.</p></details></div></div></section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner">
+  <p>© <span id="year"></span> <span data-store-name>HStudio</span>. Payments are handled by Tebex, the merchant of record for all purchases.</p>
+  <nav class="footer-links" aria-label="Legal"><a id="termsLink" href="#" target="_blank" rel="noopener">Terms of sale</a><a id="impressumLink" href="#" target="_blank" rel="noopener">Impressum</a><a data-discord href="#" target="_blank" rel="noopener">Discord</a></nav>
+</div></footer>
 <!-- Product detail -->
 <dialog class="product-dialog" id="productDialog" aria-labelledby="pdTitle">
   <button class="icon-btn dialog-close" type="button" data-close aria-label="Close">
@@ -539,7 +409,7 @@ dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
 <!-- Cart -->
 <dialog class="cart-dialog" id="cartDialog" aria-labelledby="cartTitle">
   <div class="cart-head">
-    <h2 id="cartTitle" style="font-size:1.3rem">Your cart</h2>
+    <h2 id="cartTitle" style="font-size:1.35rem">Your cart</h2>
     <button class="icon-btn" type="button" data-close aria-label="Close cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
@@ -550,7 +420,7 @@ dialog::backdrop { background: rgba(8, 9, 22, .6); backdrop-filter: blur(3px); }
     <p class="cart-signed" id="cartSigned" hidden></p>
     <p class="cart-error" id="cartError" role="alert" hidden></p>
     <button class="btn btn-primary btn-block" type="button" id="checkoutBtn">Continue to checkout</button>
-    <p class="cart-note" id="cartNote">You’ll sign in with your Cfx.re account, so your purchase lands straight in your keymaster. Taxes are calculated at checkout.</p>
+    <p class="cart-note" id="cartNote">You'll sign in with your Cfx.re account, so your purchase lands straight in your keymaster. Taxes are calculated at checkout.</p>
   </div>
 </dialog>
 
@@ -567,15 +437,15 @@ const CONFIG = {
   // Tebex Creator Panel → Integrations → Headless API → Public token.
   // Leave empty to preview the store with demo products.
   tebexToken: "151c5-b9b815e7df23ff55b3bfbccbf03b0b0607b75d0e",
-  storeName: "Hillstudio",
-  discordUrl: "https://discord.gg/j7Aq83BY9d",
+  storeName: "HStudio",
+  discordUrl: "https://discord.gg/wpm9hUvJBC",
   // Check these links in your Tebex panel; Tebex is the merchant of record.
   termsUrl: "https://checkout.tebex.io/terms",
   impressumUrl: "https://checkout.tebex.io/impressum",
   // Words that become compatibility badges when found in a product's name or description.
   badgeKeywords: ["ESX", "QBCore", "Qbox", "ox_lib", "Standalone", "discord.js"],
-  brandColor: "#4F46E5",
-  priceLocale: "en-IE"
+  brandColor: "#6C65EF",
+  priceLocale: "nl-NL"
 };
 
 /* =========================================================
@@ -583,18 +453,14 @@ const CONFIG = {
    ========================================================= */
 const DEMO = [
   { id: 1, name: "FiveM scripts", order: 1, packages: [
-    { id: 101, ident: "pkg_1_101", name: "Server Logs", total_price: 12.99, discount: 0, currency: "EUR", image: null,
-      description: "<p>Send every important in-game event to the right Discord channel: connects, deaths, money transfers, inventory changes and admin actions.</p><h3>Features</h3><ul><li>Separate webhook per log type</li><li>Rich embeds with player identifiers</li><li>Rate-limit safe queue</li></ul><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
-    { id: 102, ident: "pkg_1_102", name: "Admin Toolkit", total_price: 19.99, discount: 0, currency: "EUR", image: null,
-      description: "<p>A fast admin menu with spectate, teleport, revive, vehicle spawning and a full action history your staff can search.</p><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
-    { id: 103, ident: "pkg_1_103", name: "Tow Trucker Job", total_price: 7.99, discount: 2.00, currency: "EUR", image: null,
-      description: "<p>A complete tow job with dispatch calls, impound lot and payouts based on distance.</p><p>Works with ESX and QBCore.</p>" }
-  ]},
-  { id: 2, name: "Discord bots", order: 2, packages: [
-    { id: 201, ident: "pkg_2_201", name: "Community Bot", total_price: 24.99, discount: 0, currency: "EUR", image: null,
-      description: "<p>One bot for your whole community: live server status, ticket system, whitelist applications and Discord-to-FiveM role sync.</p><p>Built with discord.js and slash commands.</p>" },
-    { id: 202, ident: "pkg_2_202", name: "Ticket Bot", total_price: 9.99, discount: 0, currency: "EUR", image: null,
-      description: "<p>Ticket categories, staff roles, transcripts and auto-close for inactive tickets.</p><p>Built with discord.js. Standalone.</p>" }
+    { id: 101, ident: "pkg_1_101", name: "HS HUD", total_price: 14.99, discount: 0, currency: "EUR", image: "img/hud.jpg",
+      description: "<p>The complete HUD for your roleplay server: money, job and gang logos, clock, compass and street names, status rings and two speedometer styles.</p><h3>Features</h3><ul><li>Gauge or minimal speedometer</li><li>Seatbelt with sounds and a warning</li><li>4 themes and an in-game /hud menu</li></ul><p>Works with ESX, QBCore and Qbox.</p>" },
+    { id: 102, ident: "pkg_1_102", name: "Banking System", total_price: 20.00, discount: 0, currency: "EUR", image: "img/banking.jpg",
+      description: "<p>A complete, modern bank app for your city: accounts, cards, loans, invoices and a live crypto market in one clean UI.</p><h3>Features</h3><ul><li>Personal and shared accounts</li><li>Bank cards with unlockable designs and PIN</li><li>Credit score that grows with your players</li></ul><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
+    { id: 103, ident: "pkg_1_103", name: "Robbery System", total_price: 30.00, discount: 0, currency: "EUR", image: "img/robbery.jpg",
+      description: "<p>Tense, cinematic robberies for 24/7 stores and Fleeca banks. Every robbery is a skill check.</p><h3>4 minigames</h3><ul><li>Drill with pressure and heat</li><li>Safe code</li><li>Hack pattern</li><li>Thermite memory</li></ul><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
+    { id: 104, ident: "pkg_1_104", name: "Notify System", total_price: 4.99, discount: 0, currency: "EUR", image: "img/notify.jpg",
+      description: "<p>Notifications that look as good as the rest of your server. Clean, readable and easy to use from any script.</p><ul><li>Success, info, warning and error</li><li>Smooth animations and a progress bar</li></ul><p>Works with ESX, QBCore, Qbox and Standalone.</p>" }
   ]}
 ];
 
@@ -605,6 +471,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const API = "https://headless.tebex.io/api";
 const DEMO_MODE = !CONFIG.tebexToken;
 const BASE_URL = location.origin + location.pathname;
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const storage = {
   get(k, fallback) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
@@ -685,13 +552,13 @@ async function loadStore() {
       .map(p => ({ ...p, _cat: String(c.id), _catName: c.name })));
     if (state.packages[0]?.currency) state.currency = state.packages[0].currency;
     renderChips();
-    renderGrid();
     refreshCartPrices();
+    renderGrid(true);
   } catch (err) {
     console.error(err);
     grid.setAttribute("aria-busy", "false");
-    grid.innerHTML = `<div class="state" style="grid-column:1/-1">
-      <h3>The store couldn’t load</h3>
+    grid.innerHTML = `<div class="state">
+      <h3>The store couldn't load</h3>
       <p>Check your connection and try again. If it keeps happening, let us know on Discord.</p>
       <button class="btn btn-ghost" type="button" onclick="location.reload()">Try again</button></div>`;
   }
@@ -721,22 +588,22 @@ function priceHtml(p) {
 
 function inCart(id) { return state.cart.some(i => i.id === id); }
 
-function renderGrid() {
+function renderGrid(animate = false) {
   const grid = $("#grid");
   const list = visiblePackages();
   grid.setAttribute("aria-busy", "false");
   $("#resultCount").textContent = `${list.length} product${list.length === 1 ? "" : "s"} shown`;
   if (!list.length) {
-    grid.innerHTML = `<div class="state" style="grid-column:1/-1">
+    grid.innerHTML = `<div class="state">
       <h3>No products match “${esc(state.query)}”</h3>
-      <p>Try another word, or ask on Discord if you’re looking for something specific.</p>
+      <p>Try another word, or ask on Discord if you're looking for something specific.</p>
       <button class="btn btn-ghost" type="button" data-clear-search>Clear search</button></div>`;
     return;
   }
-  grid.innerHTML = list.map(p => {
+  grid.innerHTML = list.map((p, i) => {
     const added = inCart(p.id);
-    return `<article class="card">
-      <div class="card-media">${artHtml(p)}</div>
+    return `<article class="card${animate ? " reveal" : ""}" style="--d:${(i % 3) * 0.08}s">
+      <div class="card-media">${Number(p.discount) > 0 ? `<span class="sale">Sale</span>` : ""}${artHtml(p)}</div>
       <div class="card-body">
         <span class="card-cat">${esc(p._catName)}</span>
         <h3><button type="button" data-open="${p.id}">${esc(p.name)}</button></h3>
@@ -751,6 +618,7 @@ function renderGrid() {
       </div>
     </article>`;
   }).join("");
+  if (animate) observeReveals(grid);
 }
 
 /* =========================================================
@@ -798,6 +666,7 @@ function addToCart(id) {
   state.cart.push({ id: p.id, ident: p.ident || String(p.id), name: p.name, price: Number(p.total_price ?? p.base_price ?? 0),
     currency: p.currency || state.currency, image: imageFor(p), cat: p._catName });
   saveCart();
+  const badge = $("#cartCount"); badge.classList.remove("bump"); void badge.offsetWidth; badge.classList.add("bump");
   showToast(`${p.name} added to cart`);
 }
 function removeFromCart(id) {
@@ -826,7 +695,7 @@ function updateCartUI() {
   const list = $("#cartItems");
   const foot = $("#cartFoot");
   if (!count) {
-    list.innerHTML = `<li class="cart-empty"><p>Your cart is empty bro.</p>
+    list.innerHTML = `<li class="cart-empty"><p>Your cart is empty.</p>
       <button class="btn btn-ghost" type="button" data-browse>Browse the store</button></li>`;
     foot.hidden = true;
     return;
@@ -868,7 +737,7 @@ function setCheckoutState(mode, message = "") {
     btn.dataset.mode = "pay";
   } else {
     signed.hidden = true;
-    note.textContent = "You’ll sign in with your Cfx.re account, so your purchase lands straight in your keymaster. Taxes are calculated at checkout.";
+    note.textContent = "You'll sign in with your Cfx.re account, so your purchase lands straight in your keymaster. Taxes are calculated at checkout.";
     btn.textContent = "Continue to checkout";
     btn.dataset.mode = "start";
   }
@@ -922,7 +791,7 @@ async function startCheckout() {
     setCheckoutState("ready");
   } catch (err) {
     console.error(err);
-    setCheckoutState("idle", `Checkout couldn’t start: ${err.message} Try again, or contact us on Discord.`);
+    setCheckoutState("idle", `Checkout couldn't start: ${err.message} Try again, or contact us on Discord.`);
   }
 }
 
@@ -930,8 +799,7 @@ function pay() {
   const b = state.basket;
   if (!b) return startCheckout();
   if (window.Tebex?.checkout) {
-    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-    Tebex.checkout.init({ ident: b.ident, theme: dark ? "dark" : "light", colors: [{ name: "primary", color: CONFIG.brandColor }] });
+    Tebex.checkout.init({ ident: b.ident, theme: "dark", colors: [{ name: "primary", color: CONFIG.brandColor }] });
     try { Tebex.checkout.on("payment:complete", onPaid); } catch {}
     Tebex.checkout.launch();
   } else if (b.links?.checkout) {
@@ -955,11 +823,102 @@ function onPaid() {
    ========================================================= */
 let toastTimer;
 function showToast(text) {
+  const t = $("#toast");
   $("#toastText").textContent = text;
-  $("#toast").hidden = false;
+  t.hidden = true; void t.offsetWidth; t.hidden = false;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { $("#toast").hidden = true; }, 4000);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 4000);
 }
+
+/* =========================================================
+   Animations
+   ========================================================= */
+// Reveal on scroll
+const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }) : null;
+function observeReveals(root = document) {
+  root.querySelectorAll(".reveal:not(.in)").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+}
+
+// Header border on scroll
+addEventListener("scroll", () => $("#siteHeader")?.classList.toggle("scrolled", scrollY > 10), { passive: true });
+
+// Spotlight on cards
+$("#grid").addEventListener("pointermove", (e) => {
+  const card = e.target.closest(".card"); if (!card) return;
+  const r = card.getBoundingClientRect();
+  card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  card.style.setProperty("--my", `${e.clientY - r.top}px`);
+});
+
+// Duplicate marquee content for a seamless loop
+(() => { const m = $("#marquee"); if (!m) return; m.innerHTML += m.innerHTML.replace(/<span>/g, '<span aria-hidden="true">'); })();
+
+// Rotating headline word
+(() => {
+  const items = [...document.querySelectorAll("#rotator span")];
+  if (REDUCED || items.length < 2) return;
+  let i = 0;
+  setInterval(() => {
+    const cur = items[i]; i = (i + 1) % items.length; const next = items[i];
+    cur.classList.remove("on"); cur.classList.add("off");
+    next.classList.remove("off"); next.classList.add("on");
+    setTimeout(() => cur.classList.remove("off"), 650);
+  }, 2600);
+})();
+
+// Bank balance count-up
+(() => {
+  const el = $("#bal"); if (!el) return; const target = 50800, fmt = (v) => money(Math.round(v), "EUR").replace(/,00$/, "");
+  if (REDUCED) { el.textContent = fmt(target); return; }
+  const t0 = performance.now(), dur = 1800;
+  const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = fmt(target * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  setTimeout(() => requestAnimationFrame(step), 500);
+})();
+
+// Live notifications
+(() => {
+  const box = $("#toasts"); if (!box) return;
+  const msgs = [
+    { t: "Bank", m: "You received €2.500 from Alex", c: "#3DD68C", i: "€" },
+    { t: "Vehicle", m: "Fasten your seatbelt", c: "#F5A623", i: "!" },
+    { t: "Garage", m: "Your vehicle has been stored", c: "#A5A0FF", i: "✓" },
+    { t: "Shop", m: "You do not have enough money", c: "#FF6B8B", i: "×" },
+    { t: "Invoice", m: "New invoice from the mechanic", c: "#5AD2FF", i: "i" }
+  ];
+  let n = 0;
+  function push() {
+    const d = msgs[n++ % msgs.length];
+    const el = document.createElement("div");
+    el.className = "toast-mini glass";
+    el.innerHTML = `<i style="background:${d.c}22;color:${d.c}">${d.i}</i><div style="flex:1;min-width:0"><b>${d.t}</b><span>${d.m}</span><div class="bar" style="color:${d.c}"></div></div>`;
+    box.prepend(el);
+    const all = box.children;
+    if (all.length > 3) { const last = all[all.length - 1]; last.classList.add("out"); setTimeout(() => last.remove(), 450); }
+  }
+  push(); setTimeout(push, 700);
+  if (!REDUCED) setInterval(push, 2600);
+})();
+
+// Drill progress + heat loop
+(() => {
+  const ring = $("#drillRing"); if (!ring) return; const pct = $("#drillPct"), heat = $("#heatBar"), heatPct = $("#heatPct"), C = 163.4;
+  let p = 0, h = 0;
+  function draw() {
+    ring.style.strokeDashoffset = C * (1 - p / 100);
+    pct.textContent = `${Math.round(p)}%`;
+    heat.style.width = `${h}%`; heatPct.textContent = `${Math.round(h)}%`;
+    heat.style.backgroundColor = h > 75 ? "#FF6B8B" : h > 45 ? "#F5A623" : "#6C65EF";
+  }
+  if (REDUCED) { p = 78; h = 52; draw(); return; }
+  setInterval(() => {
+    p += 0.9 + Math.random() * 0.8; h = Math.min(92, h + (Math.random() * 3.2 - 0.9));
+    if (h > 85) h -= 14;
+    if (p >= 100) { p = 0; h = 0; }
+    draw();
+  }, 120);
+})();
 
 /* =========================================================
    Events
@@ -974,9 +933,9 @@ document.addEventListener("click", (e) => {
   else if (t.dataset.open) openProduct(Number(t.dataset.open));
   else if (t.dataset.add) addToCart(Number(t.dataset.add));
   else if (t.dataset.remove) removeFromCart(Number(t.dataset.remove));
-  else if (t.dataset.filter) { state.filter = t.dataset.filter; renderChips(); renderGrid(); }
+  else if (t.dataset.filter) { state.filter = t.dataset.filter; renderChips(); renderGrid(true); }
   else if (t.hasAttribute("data-close")) t.closest("dialog").close();
-  else if (t.hasAttribute("data-clear-search")) { state.query = ""; $("#search").value = ""; renderGrid(); $("#search").focus(); }
+  else if (t.hasAttribute("data-clear-search")) { state.query = ""; $("#search").value = ""; renderGrid(true); $("#search").focus(); }
   else if (t.hasAttribute("data-browse")) { $("#cartDialog").close(); location.hash = "store"; }
 });
 
@@ -992,7 +951,7 @@ $("#checkoutBtn").addEventListener("click", () => $("#checkoutBtn").dataset.mode
 let searchTimer;
 $("#search").addEventListener("input", (e) => {
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => { state.query = e.target.value; renderGrid(); }, 150);
+  searchTimer = setTimeout(() => { state.query = e.target.value; renderGrid(true); }, 150);
 });
 
 // Close dialogs by clicking the backdrop
@@ -1010,11 +969,34 @@ $("#year").textContent = new Date().getFullYear();
 const params = new URLSearchParams(location.search);
 if (params.has("paid") || params.has("checkout")) history.replaceState(null, "", BASE_URL + location.hash);
 
+observeReveals();
 updateCartUI();
 loadStore().then(() => {
   if (params.has("paid")) onPaid();
   else if (params.has("checkout") && state.cart.length) { openCart(); startCheckout(); }
 });
+
+
+(() => {
+  const el = document.getElementById("term"); if (!el) return;
+  const lines = [
+    ['p','> ensure hs_hud'],['ok','[HStudio] hs_hud started · 0.01ms'],
+    ['p','> ensure hs_banking'],['ok','[HStudio] hs_banking started · ESX detected'],
+    ['p','> ensure hs_robbery'],['ok','[HStudio] hs_robbery started · 4 minigames loaded'],
+    ['p','> ensure hs_notify'],['ok','[HStudio] hs_notify started · standalone'],
+    ['dim','---'],['hs','ready. your city just levelled up.']];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function render(n, partial){ el.innerHTML = lines.slice(0,n).map(([c,t])=>`<span class="${c}">${t}</span>`).join("\n") + (partial!=null?`${n?"\n":""}<span class="${lines[n][0]}">${partial}</span>`:"") + '<span class="caret"></span>'; }
+  if (reduced) { render(lines.length); return; }
+  let i = 0, c = 0;
+  (function tick(){
+    if (i >= lines.length) { setTimeout(()=>{ i=0; c=0; tick(); }, 3500); return; }
+    const [cls, t] = lines[i];
+    if (cls === 'p' && c < t.length) { c++; render(i, t.slice(0,c)); setTimeout(tick, 45 + Math.random()*50); }
+    else { i++; c = 0; render(i); setTimeout(tick, cls === 'p' ? 250 : 380); }
+  })();
+})();
+
 </script>
 </body>
 </html>
