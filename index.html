@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>HStudio Store – FiveM scripts and Discord bots</title>
 <meta name="description" content="Premium FiveM scripts and Discord bots for roleplay servers. ESX, QBCore and Qbox support, delivered through Cfx.re escrow.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236C65EF'/%3E%3Cpath d='M22 17v30M42 17v30M22 32h20' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="hillstudio-avatar.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://js.tebex.io/v/1.js" defer></script>
@@ -329,6 +329,10 @@ h1,h2{font-weight:700;letter-spacing:-.03em}
 .toast{border-color:rgba(90,210,255,.5);border-radius:8px;font-family:var(--font-mono)}
 .toast button{background:linear-gradient(90deg,#7C5CFF,#5AD2FF);color:#05060A}
 .placeholder-art{background:radial-gradient(circle at 70% 20%,rgba(90,210,255,.35),transparent 55%),#0C0F18}
+.logo-img{width:38px;height:38px;border-radius:8px;box-shadow:0 0 20px rgba(90,210,255,.55);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.logo:hover .logo-img{transform:rotate(-8deg) scale(1.06)}
+.price.free{color:var(--ok)}
+.free-tag{position:absolute;top:.8rem;left:.8rem;z-index:2;background:var(--ok);color:#05060A;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:999px;font-family:var(--font-mono)}
 
 </style>
 </head>
@@ -336,7 +340,7 @@ h1,h2{font-weight:700;letter-spacing:-.03em}
 <a class="skip" href="#store">Skip to store</a>
 <header class="site-header " id="siteHeader">
   <div class="wrap header-inner">
-    <a class="logo" href="#top" aria-label="HStudio home"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M6 4v16M18 4v16M6 12h12"/></svg></span><span data-store-name>HStudio</span></a>
+    <a class="logo" href="#top" aria-label="HStudio home"><img class="logo-img" src="hillstudio-avatar.png?v=2" alt="" width="38" height="38"><span data-store-name>HStudio</span></a>
     <nav class="main-nav" aria-label="Main"><a href="#store">Store</a><a href="#custom">Custom work</a><a href="#faq">FAQ</a><a data-discord href="#" target="_blank" rel="noopener">Discord</a></nav>
     <button class="btn btn-ghost cart-btn" type="button" id="openCart" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg> Cart <span class="cart-count" id="cartCount" data-empty="true" aria-live="polite">0</span></button>
   </div>
@@ -346,7 +350,7 @@ h1,h2{font-weight:700;letter-spacing:-.03em}
 <main id="top">
 <section class="hero"><div class="wrap hero-grid">
   <div>
-    <div class="status reveal"><i></i>all systems operational · 4 scripts live</div>
+    <div class="status reveal"><i></i>all systems operational · <span id="liveCount">7</span> scripts live</div>
     <h1 class="reveal" style="--d:.08s"><span class="glitch" data-text="Scripts that">Scripts that</span><br><span class="neon">run like code should.</span></h1>
     <p class="lead reveal" style="--d:.16s">Premium FiveM scripts and Discord bots by HStudio. Lightweight, fully configurable and built for ESX, QBCore and Qbox.</p>
     <div class="hero-actions reveal" style="--d:.24s"><a class="btn btn-primary" href="#store">./browse-store</a><a class="btn btn-ghost" href="#custom">./custom-work</a></div>
@@ -453,11 +457,11 @@ const CONFIG = {
    ========================================================= */
 const DEMO = [
   { id: 1, name: "FiveM scripts", order: 1, packages: [
-    { id: 101, ident: "pkg_1_101", name: "HS HUD", total_price: 14.99, discount: 0, currency: "EUR", image: "img/hud.jpg",
+    { id: 101, ident: "pkg_1_101", name: "HUD", total_price: 9.99, discount: 0, currency: "EUR", image: "img/hud.jpg",
       description: "<p>The complete HUD for your roleplay server: money, job and gang logos, clock, compass and street names, status rings and two speedometer styles.</p><h3>Features</h3><ul><li>Gauge or minimal speedometer</li><li>Seatbelt with sounds and a warning</li><li>4 themes and an in-game /hud menu</li></ul><p>Works with ESX, QBCore and Qbox.</p>" },
-    { id: 102, ident: "pkg_1_102", name: "Banking System", total_price: 20.00, discount: 0, currency: "EUR", image: "img/banking.jpg",
+    { id: 102, ident: "pkg_1_102", name: "Banking System", total_price: 19.99, discount: 0, currency: "EUR", image: "img/banking.jpg",
       description: "<p>A complete, modern bank app for your city: accounts, cards, loans, invoices and a live crypto market in one clean UI.</p><h3>Features</h3><ul><li>Personal and shared accounts</li><li>Bank cards with unlockable designs and PIN</li><li>Credit score that grows with your players</li></ul><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
-    { id: 103, ident: "pkg_1_103", name: "Robbery System", total_price: 30.00, discount: 0, currency: "EUR", image: "img/robbery.jpg",
+    { id: 103, ident: "pkg_1_103", name: "Robbery System", total_price: 17.99, discount: 0, currency: "EUR", image: "img/robbery.jpg",
       description: "<p>Tense, cinematic robberies for 24/7 stores and Fleeca banks. Every robbery is a skill check.</p><h3>4 minigames</h3><ul><li>Drill with pressure and heat</li><li>Safe code</li><li>Hack pattern</li><li>Thermite memory</li></ul><p>Works with ESX, QBCore and Qbox. Uses ox_lib.</p>" },
     { id: 104, ident: "pkg_1_104", name: "Notify System", total_price: 4.99, discount: 0, currency: "EUR", image: "img/notify.jpg",
       description: "<p>Notifications that look as good as the rest of your server. Clean, readable and easy to use from any script.</p><ul><li>Success, info, warning and error</li><li>Smooth animations and a progress bar</li></ul><p>Works with ESX, QBCore, Qbox and Standalone.</p>" }
@@ -478,7 +482,24 @@ const storage = {
   del(k) { try { localStorage.removeItem(k); } catch {} }
 };
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const textOf = (html) => { const d = document.createElement("div"); d.innerHTML = html || ""; return (d.textContent || "").replace(/\s+/g, " ").trim(); };
+const textOf = (html) => {
+  // Add a space at every line break and block end, so "FREE</p><p>A cinematic" doesn't become "FREEA cinematic".
+  const spaced = String(html || "").replace(/<br\s*\/?>|<\/(p|div|li|h[1-6]|ul|ol|tr|td)>/gi, " $&");
+  const d = document.createElement("div"); d.innerHTML = spaced;
+  return (d.textContent || "").replace(/\s+/g, " ").trim();
+};
+// Clean product names from Tebex: "H_STUDIO - PREMIUM BANKING SYSTEM - ALL FRAMEWORKS" -> "Banking System"
+function displayName(name) {
+  let n = String(name || "")
+    .replace(/\b(h_?studio|hs_?studio|hstudio)\b/gi, "")
+    .replace(/\ball frameworks\b/gi, "")
+    .replace(/\b(premium|free|custom)\b/gi, "")
+    .replace(/\s*[-|·]\s*/g, " ")
+    .replace(/\s+/g, " ").trim();
+  if (!n) n = String(name || "");
+  return n.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).replace(/\bHud\b/g, "HUD");
+}
+const isFree = (p) => Number(p.total_price ?? p.base_price ?? 0) === 0;
 function money(amount, currency = "EUR") {
   try { return new Intl.NumberFormat(CONFIG.priceLocale, { style: "currency", currency }).format(amount); }
   catch { return `${Number(amount).toFixed(2)} ${currency}`; }
@@ -549,8 +570,9 @@ async function loadStore() {
     state.categories = cats.map(c => ({ id: String(c.id), name: c.name }));
     state.packages = cats.flatMap(c => (c.packages || [])
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-      .map(p => ({ ...p, _cat: String(c.id), _catName: c.name })));
+      .map(p => ({ ...p, name: displayName(p.name), _cat: String(c.id), _catName: c.name })));
     if (state.packages[0]?.currency) state.currency = state.packages[0].currency;
+    const lc = $("#liveCount"); if (lc) lc.textContent = state.packages.length;
     renderChips();
     refreshCartPrices();
     renderGrid(true);
@@ -582,6 +604,7 @@ function visiblePackages() {
 
 function priceHtml(p) {
   const price = Number(p.total_price ?? p.base_price ?? 0);
+  if (price === 0) return "Free";
   const was = Number(p.discount) > 0 ? `<s>${money(price + Number(p.discount), p.currency)}</s>` : "";
   return `${was}${money(price, p.currency)}`;
 }
@@ -602,18 +625,19 @@ function renderGrid(animate = false) {
   }
   grid.innerHTML = list.map((p, i) => {
     const added = inCart(p.id);
+    const free = isFree(p);
     return `<article class="card${animate ? " reveal" : ""}" style="--d:${(i % 3) * 0.08}s">
-      <div class="card-media">${Number(p.discount) > 0 ? `<span class="sale">Sale</span>` : ""}${artHtml(p)}</div>
+      <div class="card-media">${free ? `<span class="free-tag">FREE</span>` : Number(p.discount) > 0 ? `<span class="sale">Sale</span>` : ""}${artHtml(p)}</div>
       <div class="card-body">
         <span class="card-cat">${esc(p._catName)}</span>
         <h3><button type="button" data-open="${p.id}">${esc(p.name)}</button></h3>
         <p class="card-excerpt">${esc(textOf(p.description))}</p>
         <div class="badges">${badgesFor(p).map(b => `<span class="badge">${esc(b)}</span>`).join("")}</div>
         <div class="card-foot">
-          <span class="price">${priceHtml(p)}</span>
+          <span class="price${free ? " free" : ""}">${priceHtml(p)}</span>
           <button type="button" class="btn ${added ? "btn-ghost" : "btn-primary"}" data-add="${p.id}"
-            aria-label="${added ? `${esc(p.name)} is in your cart, view cart` : `Add ${esc(p.name)} to cart`}">
-            ${added ? "In cart" : "Add to cart"}</button>
+            aria-label="${added ? `${esc(p.name)} is in your cart, view cart` : `${free ? "Get" : "Add"} ${esc(p.name)}${free ? " for free" : " to cart"}`}">
+            ${added ? "In cart" : free ? "Get it free" : "Add to cart"}</button>
         </div>
       </div>
     </article>`;
@@ -638,6 +662,7 @@ function openProduct(id) {
   $("#pdBadges").innerHTML = badgesFor(p).map(b => `<span class="badge">${esc(b)}</span>`).join("");
   $("#pdDesc").innerHTML = cleanHtml(p.description);
   $("#pdPrice").innerHTML = priceHtml(p);
+  $("#pdPrice").classList.toggle("free", isFree(p));
   syncProductButton();
   $("#productDialog").showModal();
   $("#productDialog").scrollTop = 0;
@@ -646,7 +671,7 @@ function syncProductButton() {
   if (!currentProduct) return;
   const btn = $("#pdAdd");
   const added = inCart(currentProduct.id);
-  btn.textContent = added ? "View cart" : "Add to cart";
+  btn.textContent = added ? "View cart" : isFree(currentProduct) ? "Get it free" : "Add to cart";
   btn.className = `btn ${added ? "btn-ghost" : "btn-primary"}`;
 }
 
@@ -979,18 +1004,29 @@ loadStore().then(() => {
 
 (() => {
   const el = document.getElementById("term"); if (!el) return;
-  const lines = [
-    ['p','> ensure hs_hud'],['ok','[HStudio] hs_hud started · 0.01ms'],
-    ['p','> ensure hs_banking'],['ok','[HStudio] hs_banking started · ESX detected'],
-    ['p','> ensure hs_robbery'],['ok','[HStudio] hs_robbery started · 4 minigames loaded'],
-    ['p','> ensure hs_notify'],['ok','[HStudio] hs_notify started · standalone'],
-    ['dim','---'],['hs','ready. your city just levelled up.']];
+  // All scripts; every loop shows 4 random ones.
+  const scripts = [
+    ['hs_hud', 'QBCore detected'],
+    ['hs_banking', 'ESX detected'],
+    ['hs_robbery', '4 minigames loaded'],
+    ['hs_notify', 'standalone'],
+    ['hs_shops', 'Qbox detected'],
+    ['hs_staff', 'reports & staff notes ready'],
+    ['hs_carwash', 'ESX detected']
+  ];
+  let lines = [];
+  function shuffle() {
+    const pick = [...scripts].sort(() => Math.random() - .5).slice(0, 4);
+    lines = pick.flatMap(([name, info]) => [['p', `> ensure ${name}`], ['ok', `[HStudio] ${name} started · ${info}`]])
+      .concat([['dim', '---'], ['hs', 'ready. your city just levelled up.']]);
+  }
+  shuffle();
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function render(n, partial){ el.innerHTML = lines.slice(0,n).map(([c,t])=>`<span class="${c}">${t}</span>`).join("\n") + (partial!=null?`${n?"\n":""}<span class="${lines[n][0]}">${partial}</span>`:"") + '<span class="caret"></span>'; }
   if (reduced) { render(lines.length); return; }
   let i = 0, c = 0;
   (function tick(){
-    if (i >= lines.length) { setTimeout(()=>{ i=0; c=0; tick(); }, 3500); return; }
+    if (i >= lines.length) { setTimeout(()=>{ i=0; c=0; shuffle(); tick(); }, 3500); return; }
     const [cls, t] = lines[i];
     if (cls === 'p' && c < t.length) { c++; render(i, t.slice(0,c)); setTimeout(tick, 45 + Math.random()*50); }
     else { i++; c = 0; render(i); setTimeout(tick, cls === 'p' ? 250 : 380); }
